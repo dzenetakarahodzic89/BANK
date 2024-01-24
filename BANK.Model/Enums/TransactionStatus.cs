@@ -1,7 +1,8 @@
 ﻿using System;
 namespace BANK.Model.Enums
 {
-    public enum TransactionStatus
+    [System.Flags]
+    public enum TransactionStatus : byte
     {
         Pending,
         Approved,

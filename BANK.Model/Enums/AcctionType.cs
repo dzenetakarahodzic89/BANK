@@ -1,7 +1,8 @@
 ﻿using System;
 namespace BANK.Model.Enums
 {
-    public enum AcctionType
+    [System.Flags]
+    public enum AcctionType : byte
     {
         CreateAccount = 1,
         UpdateAccount,

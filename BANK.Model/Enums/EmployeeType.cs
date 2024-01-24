@@ -1,8 +1,10 @@
 ﻿using System;
 namespace BANK.Model.Enums
 {
-    public enum EmployeeType
+    [System.Flags]
+    public enum EmployeeType : byte
     {
+
         CounterWorker,
         Director,
         Administrator,

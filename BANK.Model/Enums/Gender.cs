@@ -1,7 +1,8 @@
 ﻿using System;
 namespace BANK.Model.Enums
 {
-    public enum Gender
+    [System.Flags]
+    public enum Gender : byte
     {
 
         Male = 1,

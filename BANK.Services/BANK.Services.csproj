@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BANK.DAO\BANK.DAO.csproj" />
+    <ProjectReference Include="..\BANK.Model\BANK.Model.csproj" />
+  </ItemGroup>
 </Project>
