@@ -7,13 +7,13 @@ class Program
     static void Main(string[] args)
     {
 
-        var currency = new CurrencyDAO();
-        currency.GetCurrencyById("BAM");
+
+
 
         var dao = new CurrencyDAO();
         dao.load();
-
-
+        var currency = dao.getCurrencyById("BAM");
+        WriteLine(currency?.Name);
 
 
         //Console.WriteLine("Hello, World!");

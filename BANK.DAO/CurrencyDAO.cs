@@ -1,6 +1,7 @@
 ﻿using BANK.Model;
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace BANK.DAO
 {
@@ -8,6 +9,10 @@ namespace BANK.DAO
     {
         List<Currency> currencies { get; set; } = new();
 
+
+
+
+        /* *****************************************************************************************************************/
 
         public void save()
 
@@ -40,6 +45,11 @@ namespace BANK.DAO
         }
 
 
+
+
+
+
+        /* *****************************************************************************************************************/
 
         public void load()
         {
@@ -88,19 +98,87 @@ namespace BANK.DAO
 
         }
 
-        public Currency GetCurrencyById(string id)
+
+        /* *****************************************************************************************************************/
+
+        public Currency? getCurrencyById(string id)
+        {   // Where metoda uzme element iz liste 
+            return currencies.Where(currency => currency.Id.Equals(id)).FirstOrDefault();
+        }
+
+
+        /* *****************************************************************************************************************/
+
+        public List<Currency> getAllCurrency()
+        {
+            return currencies;
+        }
+
+
+
+        /* *****************************************************************************************************************/
+
+        public Currency? removeById(string id)
+        {
+            // Pronađi valutu u listi koja ima traženi ID
+            var currencyToRemove = currencies.Find(currency => currency.Id.Equals(id));
+
+            // Ako valuta postoji, ukloni je iz liste
+            if (currencyToRemove != null)
+            {
+                currencies.Remove(currencyToRemove);
+            }
+
+            // Vrati uklonjenu valutu ili null ako valuta nije pronađena
+            return currencyToRemove;
+        }
+
+        /* *****************************************************************************************************************/
+
+        public Currency? createCurrency(string id, string name, double exchangeRate, double exchangeRateB, double exchangeRateS)
         {
 
-            foreach (var currency in currencies)
-            {
-                if (currency.Id.Equals(id))
-                {
-                    return currency;
-                }
-            }
-            return null;
+            Currency newCurrency = new Currency(id, name, exchangeRate, exchangeRateB, exchangeRateS);
+
+            return newCurrency;
         }
+
+
+        /* *****************************************************************************************************************/
+
+
+
+
+        public Currency? editCurrency(string id, string name, double exchangeRate, double exchangeRateB, double exchangeRateS)
+        {
+
+            var currencyToEdit = currencies.Find(currency => currency.Id.Equals(id));
+
+            if (currencyToEdit != null)
+            {
+                currencyToEdit.Name = name;
+                currencyToEdit.Id = id;
+                currencyToEdit.ExchangeRate = exchangeRate;
+                currencyToEdit.ExchangeRateB = exchangeRateB;
+                currencyToEdit.ExchangeRateS = exchangeRateS;
+
+                return currencyToEdit;
+            }
+
+            // Vrati izmjnenjenu valutu ili null ako valuta nije pronađena
+            return null;
+
+        }
+
+
+        /* *****************************************************************************************************************/
 
     }
 
+
+
+
+
 }
+
+
