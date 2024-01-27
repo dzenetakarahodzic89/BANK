@@ -32,7 +32,6 @@ namespace BANK.DAO
             string path = Path.Combine(Environment.CurrentDirectory, CsvFilePath);
             using (var writer = new StreamWriter(path))
             {
-                // Write the CSV header
                 writer.WriteLine("Id,Name,SurName,Gender,Password,Salt,isActive,CreateOn,DeleteOn,Email,Address,Phone");
 
                 foreach (var person in People)
@@ -66,7 +65,6 @@ namespace BANK.DAO
             string path = Path.Combine(Environment.CurrentDirectory, EmployeCsvFilePath);
             using (var writer = new StreamWriter(path))
             {
-                // Write the CSV header
                 writer.WriteLine("UserId,EmployeeType");
 
                 foreach (var person in employees)
@@ -90,7 +88,6 @@ namespace BANK.DAO
             string path = Path.Combine(Environment.CurrentDirectory, ClientCsvFilePath);
             using (var writer = new StreamWriter(path))
             {
-                // Write the CSV header
                 writer.WriteLine("UserId,DueDate");
 
                 foreach (var person in client)

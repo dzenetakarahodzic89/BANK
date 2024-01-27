@@ -115,16 +115,12 @@ namespace BANK.DAO
 
         public Currency? removeById(string id)
         {
-            // Pronađi valutu u listi koja ima traženi ID
             var currencyToRemove = currencies.Find(currency => currency.Id.Equals(id));
 
-            // Ako valuta postoji, ukloni je iz liste
             if (currencyToRemove != null)
             {
                 currencies.Remove(currencyToRemove);
             }
-
-            // Vrati uklonjenu valutu ili null ako valuta nije pronađena
             return currencyToRemove;
         }
 
@@ -167,20 +163,11 @@ namespace BANK.DAO
 
                 return currencyToEdit;
             }
-
-            // Vrati izmjnenjenu valutu ili null ako valuta nije pronađena
             return null;
 
         }
 
-
-        /* *****************************************************************************************************************/
-
     }
-
-
-
-
 
 }
 
