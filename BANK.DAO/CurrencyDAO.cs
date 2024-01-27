@@ -1,11 +1,13 @@
 ﻿using BANK.Model;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace BANK.DAO
 {
-    public class CurrencyDAO
+    public class CurrencyDAO : ICurrencyDAO
     {
         List<Currency> currencies { get; set; } = new();
 
@@ -89,13 +91,6 @@ namespace BANK.DAO
                 }
             }
 
-
-            //foreach (var currency in currencies)
-            //{
-            //    Console.WriteLine($"{currency.Id} - {currency.Name} - {currency.ExchangeRate}");
-            //}
-
-
         }
 
 
@@ -137,8 +132,17 @@ namespace BANK.DAO
 
         public Currency? createCurrency(string id, string name, double exchangeRate, double exchangeRateB, double exchangeRateS)
         {
+            var currencyToEdit = currencies.Find(currency => currency.Id.Equals(id));
 
+            if (currencyToEdit != null)
+            {
+
+                throw new Exception($"This currency Id : {id} , already exist");
+
+
+            }
             Currency newCurrency = new Currency(id, name, exchangeRate, exchangeRateB, exchangeRateS);
+            currencies.Add(newCurrency);
 
             return newCurrency;
         }
@@ -157,7 +161,6 @@ namespace BANK.DAO
             if (currencyToEdit != null)
             {
                 currencyToEdit.Name = name;
-                currencyToEdit.Id = id;
                 currencyToEdit.ExchangeRate = exchangeRate;
                 currencyToEdit.ExchangeRateB = exchangeRateB;
                 currencyToEdit.ExchangeRateS = exchangeRateS;
