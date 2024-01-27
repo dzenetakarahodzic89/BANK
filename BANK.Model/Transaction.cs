@@ -8,22 +8,22 @@ namespace BANK.Model
         public string Id { get; set; }
         public DateTime TransactionDate { get; set; }
         public TransactionType TransactionType { get; set; }
-        public string ToAccountType { get; set; }
-        public string FromAccountType { get; set; }
+        public string ToAccountId { get; set; }
+        public string FromAccountId { get; set; }
         public decimal TransactionAmount { get; set; }
         public TransactionStatus TransactionStatus { get; set; }
-        public Employee Employee { get; set; }
+        public string EmployeeId { get; set; }
 
-        public Transaction(string id, DateTime transactionDate, TransactionType transactionType, string toAccountType, string fromAccountType, decimal transactionAmount, TransactionStatus transactionStatus, Employee employee)
+        public Transaction(string id, DateTime transactionDate, TransactionType transactionType, string toAccountId, string fromAccountId, decimal transactionAmount, TransactionStatus transactionStatus, string employeeId)
         {
             Id = id;
             TransactionDate = transactionDate;
             TransactionType = transactionType;
-            ToAccountType = toAccountType;
-            FromAccountType = fromAccountType;
+            ToAccountId = toAccountId;
+            FromAccountId = fromAccountId;
             TransactionAmount = transactionAmount;
             TransactionStatus = transactionStatus;
-            Employee = employee;
+            EmployeeId = employeeId;
         }
     }
 }
