@@ -2,7 +2,7 @@
 namespace BANK.Model.Enums
 {
     [System.Flags]
-    public enum AcctionType : byte
+    public enum ActionType : byte
     {
         CreateAccount = 1,
         UpdateAccount,

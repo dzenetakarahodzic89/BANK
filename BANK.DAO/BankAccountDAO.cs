@@ -1,4 +1,5 @@
 ﻿using BANK.Model;
+using BANK.Model.Enums;
 using System;
 using System.Globalization;
 
@@ -13,6 +14,12 @@ namespace BANK.DAO
 
         public void save()
         {
+            var bankAccount = new List<BankAccount> {
+
+                new BankAccount(accountType:AccountType.Current,balance:100.00m,id:"MAC",userId:"ID2",currencyId:"BAM"),
+                new BankAccount(accountType:AccountType.Savings,balance:50.00m,id:"DOM",userId:"ID2",currencyId:"USD")
+            };
+
             if (bankAccount == null || bankAccount.Count == 0)
             {
                 throw new InvalidOperationException("Podaci o bankovnim računima nisu dostupni. Molimo popunite informacije o korisniku.");
@@ -55,7 +62,7 @@ namespace BANK.DAO
                     if (values.Length == 5)
                     {
                         var account = new BankAccount(
-                            accountType: values[0].Trim('\"'),
+                            accountType:Enum.Parse<AccountType>(values[0]),
                             balance: decimal.Parse(values[1], CultureInfo.InvariantCulture),
                             id: values[2].Trim('\"'),
                             userId: values[3].Trim('\"'),
@@ -98,14 +105,16 @@ namespace BANK.DAO
             return bankAccountToRemove;
         }
 
-        public BankAccount? createBankAccount(string accountType, decimal balance, string id, string userId, string currencyId)
+        public BankAccount? createBankAccount(AccountType accountType, decimal balance, string id, string userId, string currencyId)
         {
             var bankAccountToEdit = bankAccount.Find(a => a.Id.Equals(id));
 
             if (bankAccountToEdit != null)
             {
+
                 throw new Exception($"This currency Id : {id} , already exist");
             }
+
 
             BankAccount newBankAccount = new BankAccount(accountType, balance, id, userId, currencyId);
             bankAccount.Add(newBankAccount);
@@ -113,7 +122,7 @@ namespace BANK.DAO
             return newBankAccount;
         }
 
-        public bool editBankAccount(string id, string newAccountType, decimal newBalance, string newUserId, string newCurrencyId)
+        public bool editBankAccount(string id, AccountType newAccountType, decimal newBalance, string newUserId, string newCurrencyId)
         {
             var bankAccountToEdit = bankAccount.Find(a => a.Id.Equals(id));
 

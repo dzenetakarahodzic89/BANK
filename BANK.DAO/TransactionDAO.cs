@@ -17,8 +17,8 @@ namespace BANK.DAO
             var transactions = new List<Transaction>
             {
                 new Transaction("TRX1", DateTime.Now, TransactionType.FixedDeposit, "TO_ACC_ID1", "FROM_ACC_ID1", 100.00m, TransactionStatus.Complited, "EMP1"),
-                new Transaction("MS1",DateTime.Today,TransactionType.Current,"To_ACC_ID2","FROM_ACC_ID2",200.00m,TransactionStatus.Approved,"DK1"),
-                new Transaction("MS1",DateTime.Now,TransactionType.Savings,"To_ACC_ID3","FROM_ACC_ID3",500.00m,TransactionStatus.Complited,"DK3")
+                new Transaction("MS1",DateTime.Today,TransactionType.Current,"To_ACC_ID2","FROM_ACC_ID2",200.00m,TransactionStatus.Approved,"ID1"),
+                new Transaction("MS2",DateTime.Now,TransactionType.Savings,"To_ACC_ID3","FROM_ACC_ID3",500.00m,TransactionStatus.Complited,"ID1")
 
             };
 

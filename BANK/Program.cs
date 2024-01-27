@@ -32,9 +32,19 @@ class Program
 
         var peopleDAO = services.GetRequiredService<IPersonDAO>();
 
-        currenciesDAO.load();
+        var transactionDAO = services.GetRequiredService<ITransactionDAO>();
+
+        var bankAcccountDAO = services.GetRequiredService<IBankAccountDAO>();
+
+        var historyOfActionsDAO = services.GetRequiredService<IHistoryOfActionsDAO>();
+
+        transactionDAO.save();
+        bankAcccountDAO.save();
+        historyOfActionsDAO.save();
+
+        //currenciesDAO.load();
         peopleDAO.save();
-        peopleDAO.load();
+       // peopleDAO.load();
 
         var currenciesServices = services.GetRequiredService<ICurrencyService>();
 
@@ -73,6 +83,9 @@ class Program
         // Registracija DAO kao singleton
         serviceCollection.AddSingleton<ICurrencyDAO, CurrencyDAO>();
         serviceCollection.AddSingleton<IPersonDAO, PersonDAO>();
+        serviceCollection.AddSingleton<IHistoryOfActionsDAO, HistoryOfActionsDAO>();
+        serviceCollection.AddSingleton<ITransactionDAO, TransactionDAO>();
+        serviceCollection.AddSingleton<IBankAccountDAO, BankAccountDAO>();
 
         // Registracija servisa, DI će automatski proslijediti CurrencyDAO instancu
         serviceCollection.AddSingleton<ICurrencyService, CurrencyService>();
