@@ -30,8 +30,9 @@ namespace BANK.DAO
 
         };
             string path = Path.Combine(Environment.CurrentDirectory, CsvFilePath);
-            using (var writer = new StreamWriter(path))
+            using (var writer = new StreamWriter(path))                                         
             {
+                //TODO: IMA VISAK I MANJAK PARAMETARA U CSV HEDERU U LISTI 
                 writer.WriteLine("Id,Name,SurName,Gender,Password,Salt,isActive,CreateOn,DeleteOn,Email,Address,Phone");
 
                 foreach (var person in People)
