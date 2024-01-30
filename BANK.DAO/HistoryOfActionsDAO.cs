@@ -15,7 +15,7 @@ namespace BANK.DAO
         {
             var historyOfActions = new List<HistoryOfActions>
             {
-                new HistoryOfActions("BB", "ID2", DateTime.Today, ActionType.CreateAccount, "ID1","MAC"),
+                new HistoryOfActions("BB", "ID2", DateTime.Today, ActionType.CreateClient, "ID1","MAC"),
                 new HistoryOfActions("ŠŠ","IDD2",DateTime.Now,ActionType.ApprovedTransaction,"ID1","DOM"),
                 
 
@@ -99,8 +99,12 @@ namespace BANK.DAO
         }
 
 
-        public HistoryOfActions? createHistoryOfActions(string id, string accountId, DateTime actionDate, ActionType actionType, string employeeId, string bankAccountId)
+        public HistoryOfActions? createHistoryOfActions( string accountId, DateTime actionDate, ActionType actionType, string employeeId, string? bankAccountId)
         {
+
+            Guid guid = Guid.NewGuid();
+            string id = guid.ToString();
+
             var HistoryOfActionsToEdit = historyOfActions.Find(c => c.Id.Equals(id));
 
             if (HistoryOfActionsToEdit != null)

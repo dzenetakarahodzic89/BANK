@@ -4,7 +4,8 @@ namespace BANK.Model.Enums
     [System.Flags]
     public enum ActionType : byte
     {
-        CreateAccount = 1,
+        CreateClient = 1,
+        CreateBankAccount,
         UpdateAccount,
         DeleteAccount,
         RevertTransaction,
