@@ -1,9 +1,8 @@
 ﻿using System;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
 using BANK.Model;
 using BANK.Model.Enums;
 
@@ -83,7 +82,9 @@ namespace BANK.DAO
         {   //TODO: obrisat listu kasnije 
             var client = new List<ClientCSVRow>
         {
-            new ClientCSVRow("ID2", new DateTime())
+            new ClientCSVRow("ID2", new DateTime()),
+            new ClientCSVRow("IDD2", new DateTime()),
+
 
         };
             string path = Path.Combine(Environment.CurrentDirectory, ClientCsvFilePath);
@@ -255,6 +256,78 @@ namespace BANK.DAO
             }
 
         }
+
+        public Client createClient(string name, string surName,string password, Gender gender, bool isActive, DateTime createOn, string email, string address, string phone, DateTime dueDate) {
+
+            Guid guid = Guid.NewGuid();
+            string id = guid.ToString();
+
+            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8); 
+           
+            byte[] hashed = KeyDerivation.Pbkdf2(
+                password: password!,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 100000,
+                numBytesRequested: 256 / 8);
+
+
+
+            var newClient = new Client(id, name, surName, gender, hashed, salt, isActive, createOn, null, email, address, phone, dueDate);
+
+            People.Add(newClient);
+            client.Add(new ClientCSVRow(id, dueDate));
+            return newClient;
+
+
+        }
+
+        public Employee createEmployee(string name, string surName, Gender gender, string password, bool isActive, DateTime createOn, string email, string address, string phone, EmployeeType employeeType) {
+
+
+            Guid guid = Guid.NewGuid();
+            string id = guid.ToString();
+
+            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+
+            byte[] hashed = KeyDerivation.Pbkdf2(
+                password: password!,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 100000,
+                numBytesRequested: 256 / 8);
+
+
+            var newEmployee = new Employee(id, name, surName, gender, hashed, salt, isActive, createOn,null, email, address, phone, employeeType);
+            People.Add(newEmployee);
+            employees.Add(new EmployeeCSVRow(id, employeeType));
+            return newEmployee;
+
+        }
+
+
+        public Person? getById( string id) {
+
+            return People.Where(c => c.Id.Equals(id)).FirstOrDefault();
+
+        }
+
+
+        public List<Person> getAll()
+        {
+            return People;
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 }
 

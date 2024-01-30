@@ -10,9 +10,9 @@ namespace BANK.Model
         public DateTime ActionDate { get; set; }
         public ActionType ActionType { get; set; }
         public string EmployeeId { get; set; }
-        public string BankAccountId { get; set; }
+        public string? BankAccountId { get; set; }
 
-        public HistoryOfActions(string id, string accountId, DateTime actionDate, ActionType actionType, string employeeId, string bankAccountId)
+        public HistoryOfActions(string id, string accountId, DateTime actionDate, ActionType actionType, string employeeId, string? bankAccountId)
         {
             Id = id;
             AccountId = accountId;

@@ -10,13 +10,22 @@ using static System.Net.Mime.MediaTypeNames;
 namespace BANK;
 class Program
 {
-    // pomocna metoda, izbaciti kasnije 
     public static void printCurrencies(List<Currency> currencies)
     {
 
         foreach (var p in currencies)
         {
             Console.WriteLine($"{p.Id} - {p.Name} - {p.ExchangeRate} - {p.ExchangeRateB} - {p.ExchangeRateS}");
+        }
+
+    }
+
+    public static void printPersons(List<Person> people)
+    {
+
+        foreach (var p in people)
+        {
+            Console.WriteLine($"{p.Id} - {p.Name} - {p.SurName} - {p.Phone} - {p.Address}");
         }
 
     }
@@ -41,17 +50,17 @@ class Program
         transactionDAO.save();
         bankAcccountDAO.save();
         historyOfActionsDAO.save();
-
-        //currenciesDAO.load();
         peopleDAO.save();
-       // peopleDAO.load();
+        currenciesDAO.load();
+        peopleDAO.load();
 
         var currenciesServices = services.GetRequiredService<ICurrencyService>();
 
         var listCurrency = currenciesServices.getAllCurrencies();
         printCurrencies(listCurrency);
 
-
+        var people = peopleDAO.getAll();
+        printPersons(people);
 
 
 

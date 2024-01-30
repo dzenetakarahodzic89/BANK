@@ -24,7 +24,7 @@ namespace BANK.DAO
 				new Employee("ID8", "Mirza", "Sinanovic", Gender.Male, new byte[] {0x01}, new byte[] {0x02}, true, DateTime.Now, null, "mirza@example.com", "Adresa55", "444-456-7890",EmployeeType.CounterWorker),
 
 			};
-
+			
 
 			string path = Path.Combine(Environment.CurrentDirectory, EmployeePath);
 			Console.WriteLine($"{path}");
@@ -45,9 +45,12 @@ namespace BANK.DAO
 		}
 
 
-
 		
-	}
+
+
+
+
+    }
 }
 
 
