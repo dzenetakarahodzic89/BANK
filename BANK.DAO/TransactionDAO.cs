@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using BANK.Model;
 using BANK.Model.Enums;
 
@@ -14,13 +13,13 @@ namespace BANK.DAO
         
         public void save()
         {
-            var transactions = new List<Transaction>
-            {
-                new Transaction("TRX1", DateTime.Now, TransactionType.FixedDeposit, "MAC", "DOM", 100.00m, TransactionStatus.Complited, "EMP1"),
-                new Transaction("MS1",DateTime.Today,TransactionType.Current,"MAC","DOM",200.00m,TransactionStatus.Approved,"ID1"),
-                new Transaction("MS2",DateTime.Now,TransactionType.Savings,"DOM","MAC",500.00m,TransactionStatus.Complited,"ID1")
+            //var transactions = new List<Transaction>
+            //{
+            //    new Transaction("TRX1", DateTime.Now, TransactionType.FixedDeposit, "MAC", "DOM", 100.00m, TransactionStatus.Complited, "EMP1"),
+            //    new Transaction("MS1",DateTime.Today,TransactionType.Current,"MAC","DOM",200.00m,TransactionStatus.Approved,"ID1"),
+            //    new Transaction("MS2",DateTime.Now,TransactionType.Savings,"DOM","MAC",500.00m,TransactionStatus.Complited,"ID1")
 
-            };
+            //};
 
                 string path = Path.Combine(Environment.CurrentDirectory, TransactionPath);
 
@@ -32,7 +31,7 @@ namespace BANK.DAO
 
                     foreach (var transaction in transactions)
                     {
-                    writer.WriteLine($"\"{transaction.Id}\",\"{transaction.TransactionDate.ToString("o")}\",{transaction.TransactionType},{transaction.ToAccountId},{transaction.FromAccountId},{transaction.TransactionAmount},{transaction.TransactionStatus},{transaction.EmployeeId}");
+                    writer.WriteLine($"\"{transaction.Id}\",\"{transaction.TransactionDate.ToString("o")}\",{transaction.TransactionType},{transaction.ToAccountId},{transaction.FromAccountId},{transaction.TransactionAmount},{transaction.TransactionStatus},{(transaction.EmployeeId!=null ? transaction.EmployeeId : "") }");
                     }
                 }
         }
@@ -65,7 +64,7 @@ namespace BANK.DAO
                         values[4],
                         decimal.Parse(values[5], CultureInfo.InvariantCulture),
                         (TransactionStatus)Enum.Parse(typeof(TransactionStatus), values[6]),
-                        values[7]
+                        string.IsNullOrEmpty(values[7]) ? null : values[7] 
                     );
 
                     transactions.Add(transaction);
@@ -97,8 +96,9 @@ namespace BANK.DAO
             return transactionToRemove;
         }
 
-        public Transaction? createTransaction(string id, DateTime transactionDate, TransactionType transactionType, string toAccountId, string fromAccountId, decimal transactionAmount, TransactionStatus transactionStatus, string employeeId)
+        public Transaction? createTransaction( DateTime transactionDate, TransactionType transactionType, string toAccountId, string fromAccountId, decimal transactionAmount, TransactionStatus transactionStatus, string? employeeId)
         {
+            string id = Guid.NewGuid().ToString();
             var transactionToEdit = transactions.Find(c => c.Id.Equals(id));
 
             if (transactionToEdit != null)
@@ -131,6 +131,38 @@ namespace BANK.DAO
             return null;
 
         }
+
+
+        public Transaction? ApproveTransaction(string id, string employeeId)
+        {
+            var transactionToApprove = transactions.FirstOrDefault(t => t.Id.Equals(id));
+
+            if (transactionToApprove != null)
+            {
+                if (transactionToApprove.TransactionStatus == TransactionStatus.Approved)
+                {
+                    throw new Exception("Transaction is already approved!");
+                }
+                transactionToApprove.TransactionStatus = TransactionStatus.Approved;
+                transactionToApprove.EmployeeId = employeeId;
+
+                return transactionToApprove;
+            }
+
+            throw new KeyNotFoundException($"No transaction with id {id}");
+        }
+
+        public List<Transaction> getAllTransactionsByBankAccountId(string bankAccountId)
+        {
+            return transactions.Where(t => t.FromAccountId.Equals(bankAccountId) || t.ToAccountId.Equals(bankAccountId)).ToList();
+        }
+        public List<Transaction> getAllTransactionsByBankAccountIdAndStatus(string bankAccountId, TransactionStatus status)
+        {
+            return transactions.Where(t => (t.FromAccountId.Equals(bankAccountId) && t.ToAccountId.Equals(bankAccountId)) && t.TransactionStatus.Equals(status)).ToList();
+
+
+        }
+
 
     }
 }

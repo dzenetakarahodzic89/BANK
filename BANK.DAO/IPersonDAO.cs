@@ -16,6 +16,8 @@ namespace BANK.DAO
         public void loadClient();
         public Employee createEmployee(string name, string surName, Gender gender, string password, bool isActive, DateTime createOn,  string email, string address, string phone, EmployeeType employeeType);
         public Client createClient(string name, string surName, string password, Gender gender, bool isActive, DateTime createOn, string email, string address, string phone, DateTime dueDate);
+        public Person? getPersonByEmail(string email);
+
     }
 }
 

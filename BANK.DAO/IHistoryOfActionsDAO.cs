@@ -9,7 +9,7 @@ namespace BANK.DAO
         public void save();
         public void load();
         public HistoryOfActions? createHistoryOfActions( string accountId, DateTime actionDate, ActionType actionType, string employeeId, string? bankAccountId);
-
+        public List<HistoryOfActions> getAllHistoryOfAction();
     }
 }
 

@@ -14,11 +14,11 @@ namespace BANK.DAO
 
         public void save()
         {
-            var bankAccount = new List<BankAccount> {
+            //var bankAccount = new List<BankAccount> {
 
-                new BankAccount(accountType:AccountType.Current,balance:100.00m,id:"MAC",userId:"ID2",currencyId:"BAM"),
-                new BankAccount(accountType:AccountType.Savings,balance:50.00m,id:"DOM",userId:"ID2",currencyId:"USD")
-            };
+            //    new BankAccount(accountType:AccountType.Current,balance:100.00m,id:"MAC",userId:"ID2",currencyId:"BAM"),
+            //    new BankAccount(accountType:AccountType.Savings,balance:50.00m,id:"DOM",userId:"ID2",currencyId:"USD")
+            //};
 
             if (bankAccount == null || bankAccount.Count == 0)
             {
@@ -33,7 +33,7 @@ namespace BANK.DAO
 
                 foreach (var account in bankAccount)
                 {
-                    writer.WriteLine($"\"{account.AccountType}\",{account.Balance},\"{account.Id}\",\"{account.UserId}\",\"{account.CurrencyId}\"");
+                    writer.WriteLine($"{account.AccountType.ToString()},{account.Balance},\"{account.Id}\",\"{account.UserId}\",\"{account.CurrencyId}\"");
                 }
             }
         }
@@ -62,7 +62,7 @@ namespace BANK.DAO
                     if (values.Length == 5)
                     {
                         var account = new BankAccount(
-                            accountType:Enum.Parse<AccountType>(values[0]),
+                            accountType:(AccountType)Enum.Parse(typeof(AccountType), values[0]),
                             balance: decimal.Parse(values[1], CultureInfo.InvariantCulture),
                             id: values[2].Trim('\"'),
                             userId: values[3].Trim('\"'),
@@ -107,6 +107,8 @@ namespace BANK.DAO
 
         public BankAccount? createBankAccount(AccountType accountType, decimal balance, string id, string userId, string currencyId)
         {
+
+            //TODO: generisati ID da bude string od 16 brojeva
             var bankAccountToEdit = bankAccount.Find(a => a.Id.Equals(id));
 
             if (bankAccountToEdit != null)

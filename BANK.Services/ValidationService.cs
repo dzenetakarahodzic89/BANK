@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using BANK.Model;
 
 namespace BANK.Services
 {
-	public class ValidationService
+	public class ValidationService : IValidationService
 	{
 
 
-        public void validateName(string name)
+        public void ValidateName(string name)
         {
 
             if (name == null || name.Equals("") || name.Length < 3)
@@ -29,7 +30,7 @@ namespace BANK.Services
 
             if (password == null || !Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,15}$")) {
 
-                throw new Exception("Password is not valid!");
+               // throw new Exception("Password is not valid!");
 
             }
 
@@ -46,6 +47,19 @@ namespace BANK.Services
 
 
 
+        }
+
+        public void ValidatePassword(byte[] password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void validatePersonIsEmployee(Person? person)
+        {
+            if (person == null || !(person is Employee))
+            {
+                throw new UnauthorizedAccessException("User is not employee");
+            }
         }
     }
 }

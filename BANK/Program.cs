@@ -1,5 +1,6 @@
 ﻿using BANK.DAO;
 using BANK.Model;
+using BANK.Model.Enums;
 using BANK.Services;
 using static System.Console;
 using System.Collections.Generic;
@@ -48,9 +49,9 @@ class Program
         var historyOfActionsDAO = services.GetRequiredService<IHistoryOfActionsDAO>();
 
         transactionDAO.save();
-        bankAcccountDAO.save();
+        bankAcccountDAO.load();
+        //bankAcccountDAO.save();
         historyOfActionsDAO.save();
-        peopleDAO.save();
         currenciesDAO.load();
         peopleDAO.load();
 
@@ -62,8 +63,9 @@ class Program
         var people = peopleDAO.getAll();
         printPersons(people);
 
-
-
+        var personService = services.GetRequiredService<IPersonService>();
+        personService.createClient("ID1","Salko","Masic", "@Asmko1.2Po*$",Gender.Male,true,"alk1@gmail.com", "Ul.25 Novembar", "123-456-7890",DateTime.Now);
+        peopleDAO.save();
 
         //var dao = new CurrencyDAO();
         //dao.load();
@@ -89,17 +91,14 @@ class Program
     {
         var serviceCollection = new ServiceCollection();
 
-        // Registracija DAO kao singleton
         serviceCollection.AddSingleton<ICurrencyDAO, CurrencyDAO>();
         serviceCollection.AddSingleton<IPersonDAO, PersonDAO>();
         serviceCollection.AddSingleton<IHistoryOfActionsDAO, HistoryOfActionsDAO>();
         serviceCollection.AddSingleton<ITransactionDAO, TransactionDAO>();
         serviceCollection.AddSingleton<IBankAccountDAO, BankAccountDAO>();
-
-        // Registracija servisa, DI će automatski proslijediti CurrencyDAO instancu
+        serviceCollection.AddSingleton<IValidationService, ValidationService>();
         serviceCollection.AddSingleton<ICurrencyService, CurrencyService>();
-
-        // Izgradnja providera servisa
+        serviceCollection.AddSingleton<IPersonService, PersonService>();
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         return serviceProvider;
