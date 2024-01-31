@@ -21,17 +21,11 @@ namespace BANK.DAO
 
         public void save()
         {
-            var People = new List<Person>
-        {
-            new Employee("ID1", "Ime1", "Prezime1", Gender.Male, new byte[] {0x01}, new byte[] {0x02}, true, DateTime.Now, null, "email1@example.com", "Adresa1", "123-456-7890",EmployeeType.CounterWorker),
-            new Client("ID2", "Ime2", "Prezime2", Gender.Female, new byte[] {0x01}, new byte[] {0x02}, true, DateTime.Now, null, "email2@example.com", "Adresa2", "123-456-7890",new DateTime()),
-            new Client("IDD2", "Ime3", "Prezime3", Gender.Female, new byte[] {0x01}, new byte[] {0x02}, true, DateTime.Today, null, "email3@example.com", "Adresa23", "123-456-7890",new DateTime())
-
-        };
+         
             string path = Path.Combine(Environment.CurrentDirectory, CsvFilePath);
             using (var writer = new StreamWriter(path))                                         
             {
-                //TODO: IMA VISAK I MANJAK PARAMETARA U CSV HEDERU U LISTI 
+                
                 writer.WriteLine("Id,Name,SurName,Gender,Password,Salt,isActive,CreateOn,DeleteOn,Email,Address,Phone");
 
                 foreach (var person in People)
@@ -57,11 +51,11 @@ namespace BANK.DAO
         public void SaveEmployeeCSV()
         {
             //TODO:izbrisati ovu listu
-            var employees = new List<EmployeeCSVRow>
-        {
-            new EmployeeCSVRow("ID1",EmployeeType.CounterWorker),
+            //var employees = new List<EmployeeCSVRow>
+            //{
+            //    new EmployeeCSVRow("ID1",EmployeeType.CounterWorker),
 
-        };
+            //};
             string path = Path.Combine(Environment.CurrentDirectory, EmployeCsvFilePath);
             using (var writer = new StreamWriter(path))
             {
@@ -79,14 +73,14 @@ namespace BANK.DAO
         }
 
         public void SaveClientCSV()
-        {   //TODO: obrisat listu kasnije 
-            var client = new List<ClientCSVRow>
-        {
-            new ClientCSVRow("ID2", new DateTime()),
-            new ClientCSVRow("IDD2", new DateTime()),
+        {   
+        //    var client = new List<ClientCSVRow>
+        //{
+        //    new ClientCSVRow("ID2", new DateTime()),
+        //    new ClientCSVRow("IDD2", new DateTime()),
 
 
-        };
+        //};
             string path = Path.Combine(Environment.CurrentDirectory, ClientCsvFilePath);
             using (var writer = new StreamWriter(path))
             {
@@ -258,7 +252,7 @@ namespace BANK.DAO
         }
 
         public Client createClient(string name, string surName,string password, Gender gender, bool isActive, DateTime createOn, string email, string address, string phone, DateTime dueDate) {
-
+            //TODO: provjeriti da li postoji osoba sa istim emailom
             Guid guid = Guid.NewGuid();
             string id = guid.ToString();
 
@@ -316,6 +310,11 @@ namespace BANK.DAO
         public List<Person> getAll()
         {
             return People;
+        }
+
+        public Person? getPersonByEmail(string email)
+        {
+            return People.Where(p => p.Email.Equals(email)).FirstOrDefault();
         }
 
 

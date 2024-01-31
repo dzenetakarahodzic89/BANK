@@ -20,16 +20,16 @@ namespace BANK.DAO
 
         {
 
-            var currencies = new List<Currency>
-            {
-                new Currency("USD", "US Dollar", 1.00, 0.95, 1.05),
-                new Currency("EUR", "Euro", 1.13, 1.10, 1.16),
-                new Currency("BAM","Bosnian Convertible Marka", 1, 0.550, 0.560),
-                new Currency("TRY", "Turkish Lira", 0.12, 0.11, 0.13),
-                new Currency("SEK", "Swedish Krona", 0.11, 0.10, 0.12),
-                new Currency("GBP", "British Pound", 1.35, 1.30, 1.40),
-                new Currency("SAR", "Saudi Riyal", 0.27, 0.26, 0.28)
-            };
+            //var currencies = new List<Currency>
+            //{
+            //    new Currency("USD", "US Dollar", 1.00, 0.95, 1.05),
+            //    new Currency("EUR", "Euro", 1.13, 1.10, 1.16),
+            //    new Currency("BAM","Bosnian Convertible Marka", 1, 0.550, 0.560),
+            //    new Currency("TRY", "Turkish Lira", 0.12, 0.11, 0.13),
+            //    new Currency("SEK", "Swedish Krona", 0.11, 0.10, 0.12),
+            //    new Currency("GBP", "British Pound", 1.35, 1.30, 1.40),
+            //    new Currency("SAR", "Saudi Riyal", 0.27, 0.26, 0.28)
+            //};
 
             string path = Path.Combine(Environment.CurrentDirectory, "currencies.csv");
 

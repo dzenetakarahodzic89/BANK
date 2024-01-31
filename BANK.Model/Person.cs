@@ -16,6 +16,7 @@ public abstract class Person
     public string Email { get; set; }
     public string Address { get; set; }
     public string Phone { get; set; }
+    
 
     public Person(string id, string name, string surName, Gender gender, byte[] password, byte[] salt, bool isActive, DateTime createOn, DateTime? deleteOn, string email, string address, string phone)
     {
@@ -31,6 +32,7 @@ public abstract class Person
         Email = email;
         Address = address;
         Phone = phone;
+        
     }
 }
 

@@ -13,13 +13,13 @@ namespace BANK.DAO
 
         public void save()
         {
-            var historyOfActions = new List<HistoryOfActions>
-            {
-                new HistoryOfActions("BB", "ID2", DateTime.Today, ActionType.CreateClient, "ID1","MAC"),
-                new HistoryOfActions("ŠŠ","IDD2",DateTime.Now,ActionType.ApprovedTransaction,"ID1","DOM"),
+            //var historyOfActions = new List<HistoryOfActions>
+            //{
+            //    new HistoryOfActions("BB", "ID2", DateTime.Today, ActionType.CreateClient, "ID1","MAC"),
+            //    new HistoryOfActions("ŠŠ","IDD2",DateTime.Now,ActionType.ApprovedTransaction,"ID1","DOM"),
                 
 
-            };
+            //};
 
             string path = Path.Combine(Environment.CurrentDirectory, HistoryOfActionsPath);
 

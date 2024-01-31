@@ -5,7 +5,7 @@ namespace BANK.Model.Enums
     public enum TransactionStatus : byte
     {
         Pending,
-        Complited,
+        Completed,
         Approved,
         Denied,
         Revert
